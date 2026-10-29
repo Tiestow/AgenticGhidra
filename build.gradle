@@ -1,0 +1,45 @@
+def ghidraDir = findProperty("GHIDRA_INSTALL_DIR")
+        ?: System.getenv("GHIDRA_INSTALL_DIR")
+
+if (!ghidraDir) {
+    throw new GradleException(
+            "GHIDRA_INSTALL_DIR ist nicht definiert"
+    )
+}
+
+apply from: "${ghidraDir}/support/buildExtension.gradle"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.0'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher:6.0.0'
+}
+
+test {
+    useJUnitPlatform()
+    systemProperty 'java.awt.headless', 'true'
+}
+
+// Explicit opt-in only; ordinary tests never use real Codex credentials or network access.
+def codexSmokeExecutable = providers.gradleProperty('codexExecutable')
+tasks.register('codexSmokeTest', JavaExec) {
+    group = 'verification'
+    description = 'Checks local Codex handshake, account status and model catalog; never starts a turn.'
+    dependsOn testClasses
+    classpath = sourceSets.test.runtimeClasspath
+    mainClass = 'ghidraagent.codex.CodexLocalSmokeTest'
+    doFirst {
+        def executable = codexSmokeExecutable.orNull
+        if (!executable) {
+            throw new GradleException('Specify -PcodexExecutable=/absolute/path/to/codex')
+        }
+        setArgs([executable.toString()])
+    }
+}
+
+buildExtension {
+    exclude ".idea/**", ".git/**", "gradle.properties"
+}
