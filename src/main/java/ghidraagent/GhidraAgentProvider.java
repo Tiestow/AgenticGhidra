@@ -40,7 +40,7 @@ final class GhidraAgentProvider extends ComponentProviderAdapter {
         functionAddress.setToolTipText("Entry address of the function at the current cursor position");
 
         JTextArea output = new JTextArea(
-                "GhidraAgent – Phase 1.2\n\n" +
+                "AgenticGhidra – Phase 1.2\n\n" +
                 "Codex messages will appear here in a future phase.\n" +
                 "Use Connect to check authentication and available models.\n" +
                 "Chat messages and GhidraMCP will be added in later phases.",
@@ -49,7 +49,7 @@ final class GhidraAgentProvider extends ComponentProviderAdapter {
         output.setLineWrap(true);
         output.setWrapStyleWord(true);
         output.setCaretPosition(0);
-        output.getAccessibleContext().setAccessibleName("GhidraAgent output");
+        output.getAccessibleContext().setAccessibleName("AgenticGhidra output");
 
         JTextField input = new JTextField();
         JLabel inputLabel = new JLabel("Message:");

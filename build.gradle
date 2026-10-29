@@ -3,7 +3,7 @@ def ghidraDir = findProperty("GHIDRA_INSTALL_DIR")
 
 if (!ghidraDir) {
     throw new GradleException(
-            "GHIDRA_INSTALL_DIR ist nicht definiert"
+            "GHIDRA_INSTALL_DIR is not defined"
     )
 }
 

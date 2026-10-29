@@ -12,20 +12,20 @@ public final class CodexLocalSmokeTest {
         try {
             CodexClient.Snapshot result = client.connect(args[0]).get(125, TimeUnit.SECONDS);
             System.out.println("Handshake: OK");
-            System.out.println("Anmeldestatus: " + result.account().name());
-            System.out.println("Sichtbare Modelle: " + result.models().size());
+            System.out.println("Account status: " + result.account().name());
+            System.out.println("Visible models: " + result.models().size());
             if (result.account() == CodexClient.AccountStatus.LOGIN_REQUIRED) {
-                System.out.println("Bitte lokal codex login ausführen und anschließend erneut prüfen.");
+                System.out.println("Run codex login locally and try again.");
             }
         }
         catch (ExecutionException e) {
             String kind = e.getCause() instanceof CodexException safe ? safe.kind().name() : "UNKNOWN";
             // Do not attach causes: future changes must not accidentally print server payloads.
-            throw new IllegalStateException("Codex-Verbindungstest fehlgeschlagen: " + kind);
+            throw new IllegalStateException("Codex connection test failed: " + kind);
         }
         finally {
             client.closeAsync().get(15, TimeUnit.SECONDS);
-            System.out.println("Prozess und Transport freigegeben.");
+            System.out.println("Process and transport released.");
         }
     }
 }

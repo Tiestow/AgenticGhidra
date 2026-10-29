@@ -16,8 +16,8 @@ import ghidra.util.Swing;
         status = PluginStatus.STABLE,
         packageName = MiscellaneousPluginPackage.NAME,
         category = PluginCategoryNames.COMMON,
-        shortDescription = "GhidraAgent",
-        description = "Displays the active program and function in the GhidraAgent window. " +
+        shortDescription = "AgenticGhidra",
+        description = "Displays the active program and function in the AgenticGhidra window. " +
                 "Connects to the local Codex App Server to inspect authentication and available models.")
 public class GhidraAgentPlugin extends ProgramPlugin {
 
